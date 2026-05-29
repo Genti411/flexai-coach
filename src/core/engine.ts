@@ -34,7 +34,12 @@ export async function getStretchResponse(input: string, deps: EngineDeps = {}): 
   const llm = deps.llm ?? geminiClient;
   try {
     const res = await llm.suggest(input);
-    if (validateResponse(res)) return sanitize(res, safety.risk);
+    if (validateResponse(res)) {
+      // The LLM is an untrusted source: if it judges the input high-risk, enforce
+      // the safety block regardless of what recommendations it returned.
+      if (res.risk_level === 'high') return highRiskResponse();
+      return sanitize(res, safety.risk);
+    }
   } catch {
     // fall through to graceful fallback
   }

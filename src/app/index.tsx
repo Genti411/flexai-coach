@@ -28,17 +28,28 @@ export default function Home() {
   const [messages, setMessages] = useState<ChatMessage[]>([WELCOME]);
   const [draft, setDraft] = useState('');
   const lastInput = useRef<{ text: string; difficulty: Difficulty }>({ text: '', difficulty: 'beginner' });
+  const [busy, setBusy] = useState(false);
+  // Synchronous guard: two taps in the same tick both pass a state check before it
+  // updates, so serialize on a ref to avoid concurrent requests scrambling state.
+  const busyRef = useRef(false);
 
   const send = useCallback(async (raw: string, difficulty: Difficulty = 'beginner') => {
     const text = raw.trim();
-    if (!text) return;
+    if (!text || busyRef.current) return;
+    busyRef.current = true;
+    setBusy(true);
     lastInput.current = { text, difficulty };
     const userMsg: ChatMessage = { id: nextId(), role: 'user', kind: 'text', text };
     setMessages((prev) => [...prev, userMsg]);
     setDraft('');
     const prompt = difficulty === 'beginner' ? text : `${difficulty} ${text}`;
-    const response = await getStretchResponse(prompt);
-    setMessages((prev) => [...prev, { id: nextId(), role: 'assistant', kind: 'response', response }]);
+    try {
+      const response = await getStretchResponse(prompt);
+      setMessages((prev) => [...prev, { id: nextId(), role: 'assistant', kind: 'response', response }]);
+    } finally {
+      busyRef.current = false;
+      setBusy(false);
+    }
   }, []);
 
   const adjust = useCallback(
@@ -75,8 +86,12 @@ export default function Home() {
               onSubmitEditing={() => void send(draft)}
               returnKeyType="send"
             />
-            <Pressable onPress={() => void send(draft)} style={[styles.sendBtn, { backgroundColor: theme.accent }]}>
-              <ThemedText type="small" themeColor="accentText">Send</ThemedText>
+            <Pressable
+              onPress={() => void send(draft)}
+              disabled={busy}
+              style={[styles.sendBtn, { backgroundColor: theme.accent, opacity: busy ? 0.5 : 1 }]}
+            >
+              <ThemedText type="small" themeColor="accentText">{busy ? '...' : 'Send'}</ThemedText>
             </Pressable>
           </View>
         </SafeAreaView>

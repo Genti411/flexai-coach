@@ -45,4 +45,23 @@ describe('getStretchResponse', () => {
     expect(res.risk_level).toBe('medium');
     expect(res.recommendations.every((r) => !r.weighted)).toBe(true);
   });
+  it('blocks LLM responses that self-report high risk, even with recommendations', async () => {
+    const llm: LlmClient = {
+      async suggest() {
+        return {
+          disclaimer: 'd',
+          risk_level: 'high',
+          body_area: 'general',
+          summary: 'llm thinks this is serious',
+          seek_medical_help_if: [],
+          recommendations: [
+            { name: 'Bad Idea', type: 'stretch', target_muscles: ['x'], instructions: ['a'], sets: 1, reps: 1, duration: '1s', equipment: 'none', weighted: false, difficulty: 'beginner', safety_notes: ['n'], media_prompt: 'p' },
+          ],
+        } as StretchResponse;
+      },
+    };
+    const res = await getStretchResponse('something feels off all over', { llm });
+    expect(res.risk_level).toBe('high');
+    expect(res.recommendations).toHaveLength(0);
+  });
 });
