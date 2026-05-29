@@ -5,4 +5,7 @@ module.exports = {
   transformIgnorePatterns: [
     'node_modules/(?!((jest-)?react-native|@react-native(-community)?|expo(nent)?|@expo(nent)?/.*|react-native-url-polyfill))',
   ],
+  moduleNameMapper: {
+    '\\.css$': '<rootDir>/jest.mock.css.js',
+  },
 };
