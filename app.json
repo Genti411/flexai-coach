@@ -1,0 +1,13 @@
+{
+  "expo": {
+    "name": "FlexAI Coach",
+    "slug": "flexai-coach",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "flexaicoach",
+    "userInterfaceStyle": "automatic",
+    "web": { "output": "static" },
+    "plugins": ["expo-router"],
+    "experiments": { "typedRoutes": true, "reactCompiler": true }
+  }
+}
