@@ -7,5 +7,7 @@ module.exports = {
   ],
   moduleNameMapper: {
     '\\.css$': '<rootDir>/jest.mock.css.js',
+    '@react-native-async-storage/async-storage':
+      '@react-native-async-storage/async-storage/jest/async-storage-mock',
   },
 };
