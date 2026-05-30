@@ -2,7 +2,7 @@
 // and must be kept in sync with these. Replace the placeholder contacts before
 // publishing.
 
-export const CONTACT_EMAIL = 'support@flexaicoach.app'; // TODO: replace with a real, monitored address
+export const CONTACT_EMAIL = 'gentian.hoxha91@gmail.com'; // TODO: replace with a real, monitored address
 
 export interface LegalSection {
   heading: string;

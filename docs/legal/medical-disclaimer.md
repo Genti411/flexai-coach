@@ -58,4 +58,4 @@ suggestion will produce any particular result or relieve any particular symptom.
 
 ## Contact
 
-Questions about this disclaimer: {{CONTACT_EMAIL}}
+Questions about this disclaimer: gentian.hoxha91@gmail.com

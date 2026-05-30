@@ -10,8 +10,8 @@ recordkeeping).
 
 | Content | Source | License |
 |---|---|---|
-| Stretch & mobility instructions, names, target muscles, safety notes (`src/core/dataset.ts`) | Original, authored for this app, describing common public-domain movements (e.g., chin tucks, cat-cow, calf stretch) | Original work, owned by {{COMPANY_NAME}}. Exercise movements themselves are not copyrightable; the specific wording here is original. |
-| Disclaimer, privacy, terms, copyright text (`docs/legal/`, `src/content/legal.ts`) | Original drafts for this app | Original work, owned by {{COMPANY_NAME}} (pending attorney review) |
+| Stretch & mobility instructions, names, target muscles, safety notes (`src/core/dataset.ts`) | Original, authored for this app, describing common public-domain movements (e.g., chin tucks, cat-cow, calf stretch) | Original work, owned by Gentian Hoxha. Exercise movements themselves are not copyrightable; the specific wording here is original. |
+| Disclaimer, privacy, terms, copyright text (`docs/legal/`, `src/content/legal.ts`) | Original drafts for this app | Original work, owned by Gentian Hoxha (pending attorney review) |
 
 ## Media
 

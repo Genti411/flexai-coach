@@ -7,7 +7,7 @@ _Last updated: 2026-05-30_
 ## Our content
 
 All exercise text, descriptions, design, and any media used in FlexAI Coach are
-either original to {{COMPANY_NAME}}, properly licensed, in the public domain, or
+either original to Gentian Hoxha, properly licensed, in the public domain, or
 generated for use within the app. App-generated media is produced from prompts that
 explicitly avoid logos, brand names, celebrity likenesses, and any copyrighted
 character or artistic style. We do not copy exercise videos, images, or text from
@@ -32,7 +32,7 @@ below will apply.
 ## Notice and takedown process
 
 If you believe content in the app infringes your copyright, send a notice to
-{{COPYRIGHT_CONTACT_EMAIL}} including:
+gentian.hoxha91@gmail.com including:
 
 1. your contact information;
 2. identification of the copyrighted work claimed to be infringed;
@@ -50,4 +50,4 @@ with applicable law (e.g., the DMCA in the United States).
 
 ## Contact
 
-Copyright / takedown: {{COPYRIGHT_CONTACT_EMAIL}}
+Copyright / takedown: gentian.hoxha91@gmail.com

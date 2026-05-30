@@ -39,7 +39,7 @@ stretching,mobility,flexibility,stretch routine,neck,back,hamstring,calf,recover
 
 ## URLs (fill before submission)
 - Privacy policy URL: https://<owner>.github.io/<repo>/#privacy  (enable GitHub Pages)
-- Support URL / email: {{SUPPORT_URL_OR_EMAIL}}
+- Support URL / email: gentian.hoxha91@gmail.com
 
 ---
 

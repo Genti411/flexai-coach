@@ -1,4 +1,4 @@
-Copyright (c) 2026 {{COMPANY_OR_OWNER_NAME}}. All rights reserved.
+Copyright (c) 2026 Gentian Hoxha. All rights reserved.
 
 This software and its source code, content, and assets are proprietary and
 confidential. No license, express or implied, is granted to copy, modify,
@@ -12,6 +12,7 @@ under their own licenses; see package.json and each package's license.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED.
 
-TODO: replace {{COMPANY_OR_OWNER_NAME}} with the legal copyright holder. If you
-intend to open-source this project instead, replace this file with the chosen
-open-source license (e.g., MIT) and update references accordingly.
+NOTE: the copyright holder is set to "Gentian Hoxha" (repo owner). Confirm this is
+the correct legal copyright holder before publishing. If you intend to open-source
+this project instead, replace this file with the chosen open-source license (e.g.,
+MIT) and update references accordingly.

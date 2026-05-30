@@ -104,4 +104,4 @@ date and surfaced in the app.
 
 ## Contact
 
-Privacy questions or requests: {{CONTACT_EMAIL}}
+Privacy questions or requests: gentian.hoxha91@gmail.com

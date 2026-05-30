@@ -9,7 +9,7 @@ _Last updated: 2026-05-30. Status legend: [x] done in repo · [ ] developer acti
 - [x] Copyright policy + takedown process (`docs/legal/copyright-policy.md`)
 - [x] Content license register (`docs/legal/content-licenses.md`)
 - [x] First-run consent gate (disclaimer + privacy) in-app
-- [ ] Attorney reviews all legal documents and fills `{{PLACEHOLDERS}}`
+- [~] Placeholders pre-filled with best-effort values (owner: Gentian Hoxha; contact: gentian.hoxha91@gmail.com; governing law: State of New York, US, inferred from timezone). **Confirm/replace these and have an attorney review all legal documents before publishing.** A dedicated support address is recommended over a personal email.
 - [~] Public privacy-policy URL: self-contained site ready (`legal-site/`) + Pages
       workflow template (`docs/ci/pages.yml`). Owner enables: add the workflow +
       Settings -> Pages -> Source: GitHub Actions. URL: `https://<owner>.github.io/<repo>/#privacy`
