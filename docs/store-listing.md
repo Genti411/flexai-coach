@@ -38,7 +38,7 @@ stretching,mobility,flexibility,stretch routine,neck,back,hamstring,calf,recover
 - Not directed to children; rate per questionnaire (no objectionable content).
 
 ## URLs (fill before submission)
-- Privacy policy URL: https://<owner>.github.io/<repo>/#privacy  (enable GitHub Pages)
+- Privacy policy URL (LIVE): https://genti411.github.io/flexai-coach-legal/#privacy
 - Support URL / email: gentian.hoxha91@gmail.com
 
 ---

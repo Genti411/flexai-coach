@@ -50,6 +50,10 @@ npx expo export --platform web # production bundle (sanity build)
 - Medical disclaimer, privacy policy, terms of use, copyright policy:
   `docs/legal/` (also surfaced in-app under **Legal & Safety**). These are
   **attorney-review drafts**, not legal advice.
+- Public privacy-policy URL (for store submission), live via GitHub Pages:
+  https://genti411.github.io/flexai-coach-legal/#privacy
+  (served from the separate public `flexai-coach-legal` repo; this app's source
+  stays private. Re-push `legal-site/index.html` there when content changes.)
 - Security policy and API-key posture: `SECURITY.md`.
 - Content license register: `docs/legal/content-licenses.md`.
 - Pre-launch checklist (App Store + Google Play): `docs/compliance-checklist.md`.

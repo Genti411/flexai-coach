@@ -10,9 +10,10 @@ _Last updated: 2026-05-30. Status legend: [x] done in repo · [ ] developer acti
 - [x] Content license register (`docs/legal/content-licenses.md`)
 - [x] First-run consent gate (disclaimer + privacy) in-app
 - [~] Placeholders pre-filled with best-effort values (owner: Gentian Hoxha; contact: gentian.hoxha91@gmail.com; governing law: State of New York, US, inferred from timezone). **Confirm/replace these and have an attorney review all legal documents before publishing.** A dedicated support address is recommended over a personal email.
-- [~] Public privacy-policy URL: self-contained site ready (`legal-site/`) + Pages
-      workflow template (`docs/ci/pages.yml`). Owner enables: add the workflow +
-      Settings -> Pages -> Source: GitHub Actions. URL: `https://<owner>.github.io/<repo>/#privacy`
+- [x] Public privacy-policy URL is **LIVE**: https://genti411.github.io/flexai-coach-legal/#privacy
+      (served from the public `Genti411/flexai-coach-legal` repo via GitHub Pages; app
+      source stays private). Source for that page: `legal-site/index.html` here - re-push
+      it to the legal repo when the content changes.
 
 ## Apple App Store
 - [ ] App Privacy "nutrition label" completed in App Store Connect. Declare: data
