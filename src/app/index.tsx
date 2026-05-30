@@ -1,3 +1,4 @@
+import { Link } from 'expo-router';
 import { useCallback, useRef, useState } from 'react';
 import { FlatList, KeyboardAvoidingView, Platform, Pressable, StyleSheet, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -65,6 +66,17 @@ export default function Home() {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: theme.background }} edges={['top']}>
       <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+        <View style={styles.header}>
+          <ThemedText type="smallBold">FlexAI Coach</ThemedText>
+          <View style={styles.headerLinks}>
+            <Link href="/legal" asChild>
+              <Pressable><ThemedText type="link">Legal</ThemedText></Pressable>
+            </Link>
+            <Link href="/settings" asChild>
+              <Pressable><ThemedText type="link">Settings</ThemedText></Pressable>
+            </Link>
+          </View>
+        </View>
         <DisclaimerBanner />
         <FlatList
           data={messages}
@@ -101,6 +113,8 @@ export default function Home() {
 }
 
 const styles = StyleSheet.create({
+  header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: Spacing.three, paddingTop: Spacing.two },
+  headerLinks: { flexDirection: 'row', gap: Spacing.three },
   list: { padding: Spacing.three, gap: Spacing.one },
   inputRow: { flexDirection: 'row', gap: Spacing.two, paddingHorizontal: Spacing.three, paddingBottom: Spacing.two },
   input: { flex: 1, borderRadius: 999, paddingHorizontal: Spacing.three, paddingVertical: Spacing.two },
