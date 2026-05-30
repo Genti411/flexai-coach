@@ -1,0 +1,17 @@
+Copyright (c) 2026 {{COMPANY_OR_OWNER_NAME}}. All rights reserved.
+
+This software and its source code, content, and assets are proprietary and
+confidential. No license, express or implied, is granted to copy, modify,
+distribute, sublicense, or use this software except with the prior written
+permission of the copyright holder.
+
+App content (stretch instructions, text, design, and any generated media) is
+original, licensed, public domain, or generated for use within the app, as recorded
+in docs/legal/content-licenses.md. Third-party open-source dependencies are used
+under their own licenses; see package.json and each package's license.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED.
+
+TODO: replace {{COMPANY_OR_OWNER_NAME}} with the legal copyright holder. If you
+intend to open-source this project instead, replace this file with the chosen
+open-source license (e.g., MIT) and update references accordingly.
