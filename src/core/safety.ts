@@ -17,11 +17,21 @@ export interface SafetyResult {
   matched: string[];
 }
 
+function escapeRegExp(s: string): string {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+// Match each keyword on word boundaries so a keyword is not flagged when it is only
+// a substring of an unrelated word (e.g. "numb" inside "number", "fall" inside
+// "fallback"). Conservative by design: real high-risk phrasing still matches.
+function matchKeywords(text: string, keywords: string[]): string[] {
+  return keywords.filter((k) => new RegExp(`\\b${escapeRegExp(k)}\\b`, 'i').test(text));
+}
+
 export function classifyRisk(input: string): SafetyResult {
-  const text = input.toLowerCase();
-  const high = HIGH_RISK_KEYWORDS.filter((k) => text.includes(k));
+  const high = matchKeywords(input, HIGH_RISK_KEYWORDS);
   if (high.length) return { risk: 'high', matched: high };
-  const medium = MEDIUM_RISK_PATTERNS.filter((k) => text.includes(k));
+  const medium = matchKeywords(input, MEDIUM_RISK_PATTERNS);
   if (medium.length) return { risk: 'medium', matched: medium };
   return { risk: 'low', matched: [] };
 }

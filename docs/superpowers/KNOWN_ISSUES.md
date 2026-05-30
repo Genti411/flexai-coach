@@ -1,33 +1,32 @@
 # Known Issues / Follow-ups
 
-Deferred findings from the MVP code review (2026-05-29). None is a safety hole;
-all are over-blocking (conservative) or cosmetic. Address before public release.
+Findings from the MVP code review (2026-05-29) and their status.
 
-## Safety keyword false-positives (over-blocking)
+## Resolved
 
-`src/core/safety.ts` matches bare substrings, which conservatively over-blocks:
+- **LLM self-reporting `risk_level: 'high'` with recommendations** (commit cebbd0f) —
+  engine now hard-blocks regardless of returned content.
+- **Concurrent sends scrambling state** (commit cebbd0f) — `send()` serialized via a
+  busy ref + disabled send button.
+- **Substring keyword false-positives** — `classifyRisk` now matches on word
+  boundaries, so a high-risk keyword is not flagged when it is only a substring of an
+  unrelated word ("numb" in "number", "fall" in "fallback"). See
+  `tests/core/safety.test.ts`.
+- **Dead `bodyArea` parameter** — `MessageBubble`'s `onEasier`/`onHarder` are now
+  `() => void`; `adjust` re-queries the last typed input (spec-compliant).
 
-- **"fall" / "fell"** — matches the season ("this fall") or "fell" inside other
-  words. Consider injury-context phrasing ("after a fall", "from a fall") or word
-  boundaries.
-- **"injury" / "injured"** — fires on historical injuries ("I had a knee injury
-  years ago, healed fine"), giving the emergency response to the app's core
-  audience. Consider "recent injury" / "new injury" phrasing, or a softer
-  medium-risk response for injury history rather than the emergency block.
-- **"persistent"** — matches "not persistent" / "non-persistent". Low impact
-  (medium risk only adds a disclaimer note).
+## Open — safety policy decisions (intentional over-blocks for now)
 
-Direction of all three is safe (over-block, never under-block). Any change must
-keep tests in `tests/core/safety.test.ts` green and not introduce under-blocking.
+These over-block (conservative, never under-block), so they are not safety holes, but
+they degrade UX for the core audience. Each needs a product/design decision before
+public release rather than a guess:
 
-## UI
-
-- **Dead `bodyArea` parameter** — `MessageBubble`'s `onEasier`/`onHarder` declare
-  `(bodyArea: string)` but `index.tsx` ignores it; `adjust` always re-queries the
-  last typed input. Spec-compliant but misleading; either use the per-card area or
-  drop the parameter.
-
-## Resolved in commit cebbd0f
-
-- LLM self-reporting `risk_level: 'high'` with recommendations now hard-blocks.
-- Concurrent sends serialized via a busy ref + disabled send button.
+- **"fall" as the season / "fall asleep"** — bare `fall`/`fell` still flag high-risk.
+  Kept conservative because missing a real fall is worse than over-blocking. A
+  context-aware approach ("after a fall", "I fell and...") would reduce false
+  positives but risks missing real phrasings; decide deliberately.
+- **Historical injury** — "I had a knee injury years ago, healed fine" still triggers
+  the emergency response. Options: softer medium-risk handling for past-tense injury,
+  or a follow-up clarifying question. Product decision.
+- **Negated medium terms** — "not persistent" / "non-persistent" still match
+  `persistent`. Low impact (medium only adds a disclaimer note).

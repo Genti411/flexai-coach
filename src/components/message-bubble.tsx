@@ -16,8 +16,8 @@ export function MessageBubble({
   onHarder,
 }: {
   message: ChatMessage;
-  onEasier: (bodyArea: string) => void;
-  onHarder: (bodyArea: string) => void;
+  onEasier: () => void;
+  onHarder: () => void;
 }) {
   if (message.kind === 'text') {
     const isUser = message.role === 'user';
@@ -32,7 +32,7 @@ export function MessageBubble({
     <View style={[styles.left, styles.responseWrap]}>
       <ThemedText type="small">{res.summary}</ThemedText>
       {res.recommendations.map((rec, i) => (
-        <StretchCard key={`${rec.name}-${i}`} rec={rec} onEasier={() => onEasier(res.body_area)} onHarder={() => onHarder(res.body_area)} />
+        <StretchCard key={`${rec.name}-${i}`} rec={rec} onEasier={onEasier} onHarder={onHarder} />
       ))}
       {res.seek_medical_help_if.length > 0 && (
         <ThemedText type="small" themeColor="textSecondary" style={styles.seek}>

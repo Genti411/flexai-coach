@@ -31,6 +31,14 @@ describe('classifyRisk', () => {
     expect(classifyRisk(input).risk).toBe('low');
   });
 
+  it.each([
+    ['I want a fallback routine', 'fall inside fallback'],
+    ['increase the number of reps', 'numb inside number'],
+    ['cumbersome warmups bore me', 'numb inside cumbersome'],
+  ])('does not flag a keyword that is only a substring: "%s" (%s)', (input) => {
+    expect(classifyRisk(input).risk).toBe('low');
+  });
+
   it('builds a high-risk response with no recommendations', () => {
     const res = highRiskResponse();
     expect(res.risk_level).toBe('high');
