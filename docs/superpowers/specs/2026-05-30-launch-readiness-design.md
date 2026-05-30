@@ -1,7 +1,9 @@
 # FlexAI Coach - Launch-Readiness Slice (Legal, Privacy, Security, Copyright)
 
 Date: 2026-05-30
-Status: In progress (autonomous goal: launch-ready with security + copyright met)
+Status: Complete (developer-controllable items). Verified: tsc clean, 61 tests pass,
+web target bundles. Remaining items are human-only (attorney review, privacy-policy
+hosting, Apple/Google accounts, native builds) - see docs/compliance-checklist.md.
 Slice: 2 (builds on the chat-to-stretch MVP, slice 1)
 
 ## Goal
