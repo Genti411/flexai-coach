@@ -10,7 +10,9 @@ _Last updated: 2026-05-30. Status legend: [x] done in repo · [ ] developer acti
 - [x] Content license register (`docs/legal/content-licenses.md`)
 - [x] First-run consent gate (disclaimer + privacy) in-app
 - [ ] Attorney reviews all legal documents and fills `{{PLACEHOLDERS}}`
-- [ ] Host the privacy policy at a public URL (required by both stores)
+- [~] Public privacy-policy URL: self-contained site ready (`legal-site/`) + Pages
+      workflow template (`docs/ci/pages.yml`). Owner enables: add the workflow +
+      Settings -> Pages -> Source: GitHub Actions. URL: `https://<owner>.github.io/<repo>/#privacy`
 
 ## Apple App Store
 - [ ] App Privacy "nutrition label" completed in App Store Connect. Declare: data
@@ -50,7 +52,11 @@ _Last updated: 2026-05-30. Status legend: [x] done in repo · [ ] developer acti
 - [ ] Keep `content-licenses.md` updated as media is added
 
 ## Build / submission (developer accounts required)
-- [ ] Apple Developer Program + Google Play Console accounts
-- [ ] App icons, splash, screenshots, store listing (no medical claims)
-- [ ] EAS/native builds produced and tested on device
+- [x] App icons + splash + favicon generated (`assets/images/`, via `scripts/gen-icons.js`) and wired in `app.json` (placeholder art - swap for designed artwork before submission)
+- [x] Native build identifiers set: `ios.bundleIdentifier` + `android.package` = `com.flexaicoach.app` (rename if desired before first submission - these are permanent)
+- [x] `eas.json` build profiles (development/preview/production)
+- [x] Web target verified to bundle (`npx expo export --platform web`)
+- [ ] Apple Developer Program + Google Play Console accounts (paid; identity required)
+- [ ] Run `eas build` (needs an Expo account login) and test on device
+- [ ] Store screenshots + listing copy (no medical/treatment claims)
 - [ ] Store review submitted
