@@ -1,0 +1,38 @@
+{
+  "expo": {
+    "name": "FlexAI Coach",
+    "slug": "flexai-coach",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "flexaicoach",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "bundleIdentifier": "com.flexaicoach.app",
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.flexaicoach.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#2F8F83",
+        "foregroundImage": "./assets/images/android-icon-foreground.png"
+      }
+    },
+    "web": {
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#2F8F83",
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 200
+        }
+      ]
+    ],
+    "experiments": { "typedRoutes": true, "reactCompiler": true }
+  }
+}
