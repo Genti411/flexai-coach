@@ -5,14 +5,14 @@ export type Pose = Record<Joint, Point>;
 
 // Side-view figure, facing right, viewBox 0 0 100 120 (y down). Standing neutral.
 export const NEUTRAL: Pose = {
-  head: { x: 50, y: 26 },
-  neck: { x: 50, y: 40 },
-  shoulder: { x: 50, y: 44 },
-  elbow: { x: 50, y: 58 },
-  hand: { x: 50, y: 72 },
-  hip: { x: 50, y: 74 },
-  knee: { x: 50, y: 96 },
-  ankle: { x: 50, y: 118 },
+  head: { x: 47, y: 20 },
+  neck: { x: 48, y: 34 },
+  shoulder: { x: 48, y: 40 },
+  elbow: { x: 54, y: 54 },
+  hand: { x: 52, y: 68 },
+  hip: { x: 48, y: 70 },
+  knee: { x: 44, y: 92 },
+  ankle: { x: 46, y: 114 },
 };
 
 // Bones to draw as line segments (head is drawn as a circle separately).
