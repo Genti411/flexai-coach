@@ -1,5 +1,7 @@
 import { lerpPose } from '@/animation/poses';
 import { getTrack, TRACK_IDS, TRACKS } from '@/animation/tracks';
+import { STRETCH_DATASET } from '@/core/dataset';
+import { getTrack as resolve } from '@/animation/tracks';
 
 describe('tracks', () => {
   it('getTrack returns a track for known ids and null otherwise', () => {
@@ -15,6 +17,17 @@ describe('tracks', () => {
       const mid = lerpPose(tr.a, tr.b, 0.5);
       const movedSomewhere = JSON.stringify(mid) !== JSON.stringify(tr.a);
       expect(movedSomewhere).toBe(true);
+    }
+  });
+});
+
+describe('dataset animation coverage', () => {
+  it('every curated stretch has an animationId that resolves to a track', () => {
+    for (const recs of Object.values(STRETCH_DATASET)) {
+      for (const r of recs) {
+        expect(r.animationId).toBeTruthy();
+        expect(resolve(r.animationId)).not.toBeNull();
+      }
     }
   });
 });

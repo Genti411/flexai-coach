@@ -15,6 +15,7 @@ export interface Recommendation {
   difficulty: Difficulty;
   safety_notes: string[];
   media_prompt: string;
+  animationId?: string;
 }
 
 export interface StretchResponse {
