@@ -1,5 +1,8 @@
+import { useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
+import { StretchAnimation } from '@/animation/stretch-animation';
+import { getTrack } from '@/animation/tracks';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { Spacing } from '@/constants/theme';
@@ -8,6 +11,9 @@ import { Recommendation } from '@/core/types';
 
 export function StretchCard({ rec, onEasier, onHarder }: { rec: Recommendation; onEasier: () => void; onHarder: () => void }) {
   const theme = useTheme();
+  const hasAnimation = getTrack(rec.animationId) !== null;
+  const [showAnimation, setShowAnimation] = useState(false);
+
   return (
     <ThemedView type="backgroundElement" style={styles.card}>
       <ThemedText type="smallBold">{rec.name}</ThemedText>
@@ -23,10 +29,19 @@ export function StretchCard({ rec, onEasier, onHarder }: { rec: Recommendation; 
       {rec.safety_notes.map((note, i) => (
         <ThemedText key={i} type="small" themeColor="warning">⚠ {note}</ThemedText>
       ))}
+
+      {showAnimation && hasAnimation && (
+        <View style={styles.animation}>
+          <StretchAnimation animationId={rec.animationId} />
+        </View>
+      )}
+
       <View style={styles.actions}>
-        <Pressable accessibilityState={{ disabled: true }} style={[styles.btn, { backgroundColor: theme.backgroundSelected, opacity: 0.5 }]}>
-          <ThemedText type="small">Show animation</ThemedText>
-        </Pressable>
+        {hasAnimation && (
+          <Pressable onPress={() => setShowAnimation((v) => !v)} style={[styles.btn, { backgroundColor: theme.backgroundSelected }]}>
+            <ThemedText type="small">{showAnimation ? 'Hide animation' : 'Show animation'}</ThemedText>
+          </Pressable>
+        )}
         <Pressable onPress={onEasier} style={[styles.btn, { backgroundColor: theme.backgroundSelected }]}>
           <ThemedText type="small">Make easier</ThemedText>
         </Pressable>
@@ -42,6 +57,7 @@ const styles = StyleSheet.create({
   card: { borderRadius: 16, padding: Spacing.three, gap: Spacing.one, marginTop: Spacing.two },
   step: { marginTop: Spacing.half },
   meta: { marginTop: Spacing.one },
+  animation: { alignItems: 'center', marginTop: Spacing.two },
   actions: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.two, marginTop: Spacing.two },
   btn: { paddingHorizontal: Spacing.three, paddingVertical: Spacing.two, borderRadius: 999 },
 });

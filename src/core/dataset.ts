@@ -24,6 +24,7 @@ export const STRETCH_DATASET: Record<string, Recommendation[]> = {
       ],
       media_prompt:
         'Clean fitness animation of a person sitting upright performing chin tucks, side view, neutral background, no logos.',
+      animationId: 'chinTuck',
     },
     {
       name: 'Upper Trap Stretch',
@@ -46,6 +47,7 @@ export const STRETCH_DATASET: Record<string, Recommendation[]> = {
       ],
       media_prompt:
         'Clean fitness animation of a person performing an upper trapezius neck stretch, front view, neutral background, no logos.',
+      animationId: 'neckTiltSide',
     },
     {
       name: 'Levator Scapulae Stretch',
@@ -68,6 +70,7 @@ export const STRETCH_DATASET: Record<string, Recommendation[]> = {
       ],
       media_prompt:
         'Clean fitness animation of a person performing a levator scapulae neck stretch, three-quarter view, neutral background, no logos.',
+      animationId: 'neckTurnDown',
     },
   ],
   chest: [
@@ -92,6 +95,7 @@ export const STRETCH_DATASET: Record<string, Recommendation[]> = {
       ],
       media_prompt:
         'Clean fitness animation of a person doing a doorway chest stretch, side view, neutral background, no logos.',
+      animationId: 'chestOpen',
     },
     {
       name: 'Floor Angels',
@@ -114,6 +118,7 @@ export const STRETCH_DATASET: Record<string, Recommendation[]> = {
       ],
       media_prompt:
         'Clean fitness animation of a person performing floor angels on their back, top view, neutral background, no logos.',
+      animationId: 'chestOpen',
     },
     {
       name: 'Light Dumbbell Chest Opener',
@@ -137,6 +142,7 @@ export const STRETCH_DATASET: Record<string, Recommendation[]> = {
       ],
       media_prompt:
         'Clean fitness animation of a person doing a light dumbbell chest fly stretch lying on a bench, side view, neutral background, no logos.',
+      animationId: 'chestOpen',
     },
   ],
   'lower back': [
@@ -162,6 +168,7 @@ export const STRETCH_DATASET: Record<string, Recommendation[]> = {
       ],
       media_prompt:
         'Clean fitness animation of a person on all fours performing cat-cow stretch, side view, neutral background, no logos.',
+      animationId: 'catCow',
     },
     {
       name: "Child's Pose",
@@ -185,6 +192,7 @@ export const STRETCH_DATASET: Record<string, Recommendation[]> = {
       ],
       media_prompt:
         "Clean fitness animation of a person in child's pose stretch, side view, neutral background, no logos.",
+      animationId: 'childsPose',
     },
     {
       name: 'Knee-to-Chest Stretch',
@@ -208,6 +216,7 @@ export const STRETCH_DATASET: Record<string, Recommendation[]> = {
       ],
       media_prompt:
         'Clean fitness animation of a person lying on their back pulling knees to chest, side view, neutral background, no logos.',
+      animationId: 'kneeToChest',
     },
     {
       name: 'Seated Spinal Twist',
@@ -231,6 +240,7 @@ export const STRETCH_DATASET: Record<string, Recommendation[]> = {
       ],
       media_prompt:
         'Clean fitness animation of a person seated on the floor performing a spinal twist, three-quarter view, neutral background, no logos.',
+      animationId: 'seatedTwist',
     },
   ],
   calf: [
@@ -256,6 +266,7 @@ export const STRETCH_DATASET: Record<string, Recommendation[]> = {
       ],
       media_prompt:
         'Clean fitness animation of a person doing a standing calf stretch against a wall, side view, neutral background, no logos.',
+      animationId: 'calfLunge',
     },
     {
       name: 'Seated Towel Calf Stretch',
@@ -279,6 +290,7 @@ export const STRETCH_DATASET: Record<string, Recommendation[]> = {
       ],
       media_prompt:
         'Clean fitness animation of a person seated on the floor doing a towel-assisted calf stretch, side view, neutral background, no logos.',
+      animationId: 'hamstringReach',
     },
     {
       name: 'Downward-Dog Calf Pedal',
@@ -301,6 +313,7 @@ export const STRETCH_DATASET: Record<string, Recommendation[]> = {
       ],
       media_prompt:
         'Clean fitness animation of a person in downward dog alternately pressing heels to floor, side view, neutral background, no logos.',
+      animationId: 'calfLunge',
     },
     {
       name: 'Step Heel Drop',
@@ -325,6 +338,7 @@ export const STRETCH_DATASET: Record<string, Recommendation[]> = {
       ],
       media_prompt:
         'Clean fitness animation of a person doing a heel drop stretch on a step, side view, neutral background, no logos.',
+      animationId: 'heelDrop',
     },
   ],
   shoulders: [
@@ -349,6 +363,7 @@ export const STRETCH_DATASET: Record<string, Recommendation[]> = {
       ],
       media_prompt:
         'Clean fitness animation of a person doing a cross-body shoulder stretch, front view, neutral background, no logos.',
+      animationId: 'crossBodyArm',
     },
     {
       name: 'Shoulder Rolls',
@@ -372,6 +387,7 @@ export const STRETCH_DATASET: Record<string, Recommendation[]> = {
       ],
       media_prompt:
         'Clean fitness animation of a person performing shoulder rolls, front view, neutral background, no logos.',
+      animationId: 'shoulderRoll',
     },
     {
       name: 'Doorway Shoulder Opener',
@@ -394,6 +410,7 @@ export const STRETCH_DATASET: Record<string, Recommendation[]> = {
       ],
       media_prompt:
         'Clean fitness animation of a person doing a doorway shoulder opener stretch, three-quarter view, neutral background, no logos.',
+      animationId: 'chestOpen',
     },
     {
       name: 'Light Dumbbell External Rotation',
@@ -418,6 +435,7 @@ export const STRETCH_DATASET: Record<string, Recommendation[]> = {
       ],
       media_prompt:
         'Clean fitness animation of a person performing dumbbell external shoulder rotation standing, side view, neutral background, no logos.',
+      animationId: 'crossBodyArm',
     },
   ],
   hamstrings: [
@@ -442,6 +460,7 @@ export const STRETCH_DATASET: Record<string, Recommendation[]> = {
       ],
       media_prompt:
         'Clean fitness animation of a person doing a standing hamstring stretch, side view, neutral background, no logos.',
+      animationId: 'hamstringReach',
     },
     {
       name: 'Supine Hamstring Stretch with Towel',
@@ -465,6 +484,7 @@ export const STRETCH_DATASET: Record<string, Recommendation[]> = {
       ],
       media_prompt:
         'Clean fitness animation of a person lying on their back doing a towel-assisted hamstring stretch, side view, neutral background, no logos.',
+      animationId: 'hamstringReach',
     },
     {
       name: 'Seated Forward Fold',
@@ -487,6 +507,7 @@ export const STRETCH_DATASET: Record<string, Recommendation[]> = {
       ],
       media_prompt:
         'Clean fitness animation of a person seated on the floor in a forward fold stretch, side view, neutral background, no logos.',
+      animationId: 'hamstringReach',
     },
   ],
   'post-workout': [
@@ -511,6 +532,7 @@ export const STRETCH_DATASET: Record<string, Recommendation[]> = {
       ],
       media_prompt:
         "Clean fitness animation of a person in child's pose stretch, side view, neutral background, no logos.",
+      animationId: 'childsPose',
     },
     {
       name: 'Standing Quad Stretch',
@@ -533,6 +555,7 @@ export const STRETCH_DATASET: Record<string, Recommendation[]> = {
       ],
       media_prompt:
         'Clean fitness animation of a person doing a standing quad stretch, side view, neutral background, no logos.',
+      animationId: 'quadStretch',
     },
     {
       name: "World's Greatest Stretch",
@@ -557,6 +580,7 @@ export const STRETCH_DATASET: Record<string, Recommendation[]> = {
       ],
       media_prompt:
         "Clean fitness animation of a person performing the world's greatest stretch lunge with thoracic rotation, side view, neutral background, no logos.",
+      animationId: 'calfLunge',
     },
     {
       name: 'Pigeon Pose Hip Opener',
@@ -580,6 +604,7 @@ export const STRETCH_DATASET: Record<string, Recommendation[]> = {
       ],
       media_prompt:
         'Clean fitness animation of a person doing a pigeon pose hip stretch on the floor, front-angle view, neutral background, no logos.',
+      animationId: 'childsPose',
     },
   ],
 };
