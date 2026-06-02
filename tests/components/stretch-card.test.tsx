@@ -1,7 +1,9 @@
 import { fireEvent, render, screen } from '@testing-library/react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { StretchCard } from '@/components/stretch-card';
 import { Recommendation } from '@/core/types';
+import { getRoutines } from '@/lib/routines';
 
 const base: Recommendation = {
   name: 'Chin Tucks',
@@ -40,5 +42,24 @@ describe('StretchCard', () => {
     const noAnim: Recommendation = { ...base, animationId: undefined };
     render(<StretchCard rec={noAnim} onEasier={() => {}} onHarder={() => {}} />);
     expect(screen.queryByText('Show animation')).toBeNull();
+  });
+
+  it('saves the stretch to a routine via the inline picker', async () => {
+    await AsyncStorage.clear();
+    render(<StretchCard rec={base} onEasier={() => {}} onHarder={() => {}} />);
+    fireEvent.press(screen.getByText('Save to routine'));
+    fireEvent.changeText(screen.getByPlaceholderText('New routine name'), 'My Routine');
+    fireEvent.press(screen.getByText('Create'));
+    // store write is async; allow microtasks to flush
+    await new Promise((r) => setTimeout(r, 0));
+    const rs = await getRoutines();
+    expect(rs[0]?.name).toBe('My Routine');
+    expect(rs[0]?.items[0]?.name).toBe('Chin Tucks');
+  });
+
+  it('hides adjust and save controls when no handlers are provided (saved context)', () => {
+    render(<StretchCard rec={base} />);
+    expect(screen.queryByText('Make easier')).toBeNull();
+    expect(screen.queryByText('Save to routine')).toBeNull();
   });
 });

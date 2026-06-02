@@ -1,18 +1,30 @@
 import { useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
+import { SaveToRoutine } from '@/components/save-to-routine';
 import { StretchAnimation } from '@/animation/stretch-animation';
 import { getTrack } from '@/animation/tracks';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
+import { addToRoutine } from '@/lib/routines';
 import { Recommendation } from '@/core/types';
 
-export function StretchCard({ rec, onEasier, onHarder }: { rec: Recommendation; onEasier: () => void; onHarder: () => void }) {
+export function StretchCard({ rec, onEasier, onHarder }: { rec: Recommendation; onEasier?: () => void; onHarder?: () => void }) {
   const theme = useTheme();
+  const interactive = !!onEasier && !!onHarder;
   const hasAnimation = getTrack(rec.animationId) !== null;
   const [showAnimation, setShowAnimation] = useState(false);
+  const [showSave, setShowSave] = useState(false);
+  const [savedTo, setSavedTo] = useState<string | null>(null);
+
+  const save = (name: string) => {
+    void addToRoutine(name, rec).then(() => {
+      setSavedTo(name.trim());
+      setShowSave(false);
+    });
+  };
 
   return (
     <ThemedView type="backgroundElement" style={styles.card}>
@@ -31,9 +43,7 @@ export function StretchCard({ rec, onEasier, onHarder }: { rec: Recommendation; 
       ))}
 
       {showAnimation && hasAnimation && (
-        <View style={styles.animation}>
-          <StretchAnimation animationId={rec.animationId} />
-        </View>
+        <View style={styles.animation}><StretchAnimation animationId={rec.animationId} /></View>
       )}
 
       <View style={styles.actions}>
@@ -42,13 +52,23 @@ export function StretchCard({ rec, onEasier, onHarder }: { rec: Recommendation; 
             <ThemedText type="small">{showAnimation ? 'Hide animation' : 'Show animation'}</ThemedText>
           </Pressable>
         )}
-        <Pressable onPress={onEasier} style={[styles.btn, { backgroundColor: theme.backgroundSelected }]}>
-          <ThemedText type="small">Make easier</ThemedText>
-        </Pressable>
-        <Pressable onPress={onHarder} style={[styles.btn, { backgroundColor: theme.backgroundSelected }]}>
-          <ThemedText type="small">Make harder</ThemedText>
-        </Pressable>
+        {interactive && (
+          <>
+            <Pressable onPress={onEasier} style={[styles.btn, { backgroundColor: theme.backgroundSelected }]}>
+              <ThemedText type="small">Make easier</ThemedText>
+            </Pressable>
+            <Pressable onPress={onHarder} style={[styles.btn, { backgroundColor: theme.backgroundSelected }]}>
+              <ThemedText type="small">Make harder</ThemedText>
+            </Pressable>
+            <Pressable onPress={() => { setShowSave((v) => !v); setSavedTo(null); }} style={[styles.btn, { backgroundColor: theme.backgroundSelected }]}>
+              <ThemedText type="small">Save to routine</ThemedText>
+            </Pressable>
+          </>
+        )}
       </View>
+
+      {showSave && <SaveToRoutine onSave={save} />}
+      {savedTo && <ThemedText type="small" themeColor="accent">Saved to {savedTo}.</ThemedText>}
     </ThemedView>
   );
 }
