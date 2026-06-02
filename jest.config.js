@@ -3,7 +3,7 @@ module.exports = {
   setupFiles: ['<rootDir>/jest.setup.ws.js'],
   testPathIgnorePatterns: ['/node_modules/'],
   transformIgnorePatterns: [
-    'node_modules/(?!((jest-)?react-native|@react-native(-community)?|expo(nent)?|@expo(nent)?/.*|react-native-url-polyfill))',
+    'node_modules/(?!((jest-)?react-native|@react-native(-community)?|expo(nent)?|@expo(nent)?/.*|react-native-url-polyfill|react-native-svg|react-native-reanimated|react-native-worklets))',
   ],
   moduleNameMapper: {
     '\\.css$': '<rootDir>/jest.mock.css.js',
