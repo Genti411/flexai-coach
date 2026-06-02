@@ -9,5 +9,7 @@ module.exports = {
     '\\.css$': '<rootDir>/jest.mock.css.js',
     '@react-native-async-storage/async-storage':
       '@react-native-async-storage/async-storage/jest/async-storage-mock',
+    '^react-native-worklets$':
+      '<rootDir>/node_modules/react-native-worklets/lib/module/mock.js',
   },
 };
