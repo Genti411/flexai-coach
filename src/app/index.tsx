@@ -69,6 +69,9 @@ export default function Home() {
         <View style={styles.header}>
           <ThemedText type="smallBold">FlexAI Coach</ThemedText>
           <View style={styles.headerLinks}>
+            <Link href="/routines" asChild>
+              <Pressable><ThemedText type="link">Routines</ThemedText></Pressable>
+            </Link>
             <Link href="/legal" asChild>
               <Pressable><ThemedText type="link">Legal</ThemedText></Pressable>
             </Link>
