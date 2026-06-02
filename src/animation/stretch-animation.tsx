@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { AccessibilityInfo } from 'react-native';
 import Animated, {
+  cancelAnimation,
   interpolate,
   useAnimatedProps,
   useSharedValue,
@@ -45,8 +46,12 @@ export function StretchAnimation({ animationId, size = 140 }: { animationId?: st
   useEffect(() => {
     let active = true;
     AccessibilityInfo.isReduceMotionEnabled().then((v) => active && setReduceMotion(v));
+    // Update at runtime too, so toggling Reduce Motion while an animation is open
+    // switches between looping and the static mid-pose.
+    const sub = AccessibilityInfo.addEventListener('reduceMotionChanged', setReduceMotion);
     return () => {
       active = false;
+      sub.remove();
     };
   }, []);
 
@@ -54,6 +59,11 @@ export function StretchAnimation({ animationId, size = 140 }: { animationId?: st
     if (!track || reduceMotion) return;
     progress.value = 0;
     progress.value = withRepeat(withTiming(1, { duration: track.durationMs }), -1, true);
+    // Cancel any in-flight loop when reduce-motion turns on or the component unmounts,
+    // so it doesn't keep running behind the static pose.
+    return () => {
+      cancelAnimation(progress);
+    };
   }, [track, reduceMotion, progress]);
 
   if (!track) return null;
