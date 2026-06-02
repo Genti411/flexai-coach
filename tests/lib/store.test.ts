@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { deleteData, exportData, getConsent, getProfile, setConsentAccepted, setProfile } from '@/lib/store';
+import { addToRoutine } from '@/lib/routines';
 
 beforeEach(async () => {
   await AsyncStorage.clear();
@@ -42,5 +43,16 @@ describe('store', () => {
     await deleteData();
     expect((await getConsent()).accepted).toBe(false);
     expect(await getProfile()).toEqual({});
+  });
+
+  it('export includes routines and delete clears them', async () => {
+    await addToRoutine('R', {
+      name: 'a', type: 'mobility', target_muscles: ['x'], instructions: ['a'], sets: 1, reps: 1,
+      duration: '5s', equipment: 'none', weighted: false, difficulty: 'beginner', safety_notes: ['n'], media_prompt: 'p',
+    });
+    const data = await exportData();
+    expect(data.routines).toHaveLength(1);
+    await deleteData();
+    expect((await exportData()).routines).toEqual([]);
   });
 });
