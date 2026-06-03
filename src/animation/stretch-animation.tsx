@@ -9,24 +9,53 @@ import Animated, {
   withTiming,
   type SharedValue,
 } from 'react-native-reanimated';
-import Svg, { Circle, Line } from 'react-native-svg';
+import Svg, { Circle, Ellipse, Line } from 'react-native-svg';
 
 import { FigureRig } from '@/animation/figure-rig';
+import { Joint, lerpPose, Pose } from '@/animation/poses';
+import { BAR_HALF, BARS, FAR_BONES, FAR_DX, HEAD_R, NEAR_BONES, STROKE } from '@/animation/rig-parts';
 import { getTrack } from '@/animation/tracks';
-import { Joint, lerpPose, Pose, SKELETON } from '@/animation/poses';
 import { useTheme } from '@/hooks/use-theme';
 
 const AnimatedLine = Animated.createAnimatedComponent(Line);
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
-function Bone({ from, to, a, b, progress, color }: { from: Joint; to: Joint; a: Pose; b: Pose; progress: SharedValue<number>; color: string }) {
+function Bone({
+  from,
+  to,
+  a,
+  b,
+  progress,
+  color,
+  dx = 0,
+  opacity = 1,
+}: {
+  from: Joint;
+  to: Joint;
+  a: Pose;
+  b: Pose;
+  progress: SharedValue<number>;
+  color: string;
+  dx?: number;
+  opacity?: number;
+}) {
   const animatedProps = useAnimatedProps(() => ({
-    x1: interpolate(progress.value, [0, 1], [a[from].x, b[from].x]),
+    x1: interpolate(progress.value, [0, 1], [a[from].x + dx, b[from].x + dx]),
     y1: interpolate(progress.value, [0, 1], [a[from].y, b[from].y]),
-    x2: interpolate(progress.value, [0, 1], [a[to].x, b[to].x]),
+    x2: interpolate(progress.value, [0, 1], [a[to].x + dx, b[to].x + dx]),
     y2: interpolate(progress.value, [0, 1], [a[to].y, b[to].y]),
   }));
-  return <AnimatedLine animatedProps={animatedProps} stroke={color} strokeWidth={3} strokeLinecap="round" />;
+  return <AnimatedLine animatedProps={animatedProps} stroke={color} strokeWidth={STROKE} strokeLinecap="round" opacity={opacity} />;
+}
+
+function Bar({ joint, a, b, progress, color }: { joint: Joint; a: Pose; b: Pose; progress: SharedValue<number>; color: string }) {
+  const animatedProps = useAnimatedProps(() => ({
+    x1: interpolate(progress.value, [0, 1], [a[joint].x - BAR_HALF, b[joint].x - BAR_HALF]),
+    y1: interpolate(progress.value, [0, 1], [a[joint].y, b[joint].y]),
+    x2: interpolate(progress.value, [0, 1], [a[joint].x + BAR_HALF, b[joint].x + BAR_HALF]),
+    y2: interpolate(progress.value, [0, 1], [a[joint].y, b[joint].y]),
+  }));
+  return <AnimatedLine animatedProps={animatedProps} stroke={color} strokeWidth={STROKE} strokeLinecap="round" />;
 }
 
 function Head({ a, b, progress, color }: { a: Pose; b: Pose; progress: SharedValue<number>; color: string }) {
@@ -34,10 +63,10 @@ function Head({ a, b, progress, color }: { a: Pose; b: Pose; progress: SharedVal
     cx: interpolate(progress.value, [0, 1], [a.head.x, b.head.x]),
     cy: interpolate(progress.value, [0, 1], [a.head.y, b.head.y]),
   }));
-  return <AnimatedCircle animatedProps={animatedProps} r={8} stroke={color} strokeWidth={3} fill="none" />;
+  return <AnimatedCircle animatedProps={animatedProps} r={HEAD_R} fill={color} />;
 }
 
-export function StretchAnimation({ animationId, size = 140 }: { animationId?: string; size?: number }) {
+export function StretchAnimation({ animationId, size = 150 }: { animationId?: string; size?: number }) {
   const theme = useTheme();
   const track = getTrack(animationId);
   const progress = useSharedValue(0);
@@ -46,8 +75,6 @@ export function StretchAnimation({ animationId, size = 140 }: { animationId?: st
   useEffect(() => {
     let active = true;
     AccessibilityInfo.isReduceMotionEnabled().then((v) => active && setReduceMotion(v));
-    // Update at runtime too, so toggling Reduce Motion while an animation is open
-    // switches between looping and the static mid-pose.
     const sub = AccessibilityInfo.addEventListener('reduceMotionChanged', setReduceMotion);
     return () => {
       active = false;
@@ -59,8 +86,6 @@ export function StretchAnimation({ animationId, size = 140 }: { animationId?: st
     if (!track || reduceMotion) return;
     progress.value = 0;
     progress.value = withRepeat(withTiming(1, { duration: track.durationMs }), -1, true);
-    // Cancel any in-flight loop when reduce-motion turns on or the component unmounts,
-    // so it doesn't keep running behind the static pose.
     return () => {
       cancelAnimation(progress);
     };
@@ -69,15 +94,25 @@ export function StretchAnimation({ animationId, size = 140 }: { animationId?: st
   if (!track) return null;
 
   if (reduceMotion) {
-    return <FigureRig pose={lerpPose(track.a, track.b, 0.5)} color={theme.text} size={size} />;
+    return (
+      <FigureRig pose={lerpPose(track.a, track.b, 0.5)} color={theme.text} muted={theme.textSecondary} accent={theme.accent} size={size} />
+    );
   }
 
+  const { a, b } = track;
   return (
     <Svg width={size} height={size} viewBox="0 0 100 120">
-      {SKELETON.map(([from, to], i) => (
-        <Bone key={i} from={from} to={to} a={track.a} b={track.b} progress={progress} color={theme.text} />
+      <Ellipse cx={50} cy={117} rx={16} ry={3} fill={theme.textSecondary} opacity={0.25} />
+      {FAR_BONES.map(([from, to], i) => (
+        <Bone key={`f${i}`} from={from} to={to} a={a} b={b} progress={progress} color={theme.textSecondary} dx={FAR_DX} opacity={0.55} />
       ))}
-      <Head a={track.a} b={track.b} progress={progress} color={theme.text} />
+      {BARS.map((j, i) => (
+        <Bar key={`b${i}`} joint={j} a={a} b={b} progress={progress} color={theme.text} />
+      ))}
+      {NEAR_BONES.map(([from, to], i) => (
+        <Bone key={`n${i}`} from={from} to={to} a={a} b={b} progress={progress} color={theme.text} />
+      ))}
+      <Head a={a} b={b} progress={progress} color={theme.accent} />
     </Svg>
   );
 }
