@@ -26,7 +26,8 @@ export async function restoreFromCloud(client: SupabaseClient | null = supabase)
   const { data: userData } = await client.auth.getUser();
   const user = userData?.user;
   if (!user) return { ok: false, error: 'Not signed in' };
-  const { data, error } = await client.from(TABLE).select('routines,history,profile').eq('user_id', user.id).single();
+  // maybeSingle so a brand-new account with no backup yet returns null (not an error).
+  const { data, error } = await client.from(TABLE).select('routines,history,profile').eq('user_id', user.id).maybeSingle();
   if (error) return { ok: false, error: error.message };
   if (data) {
     await replaceRoutines(data.routines ?? []);

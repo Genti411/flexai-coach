@@ -19,7 +19,7 @@ function fakeClient(opts: { cloud?: any }) {
         upsert: async (row: any) => { captured.upserted = row; return { error: null }; },
         select() { return this; },
         eq() { return this; },
-        single: async () => ({ data: opts.cloud ?? null, error: null }),
+        maybeSingle: async () => ({ data: opts.cloud ?? null, error: null }),
       };
     },
   } as any;
