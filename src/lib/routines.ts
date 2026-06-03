@@ -55,3 +55,7 @@ export async function deleteRoutine(id: string): Promise<Routine[]> {
   await persist(routines);
   return routines;
 }
+
+export async function replaceRoutines(routines: Routine[]): Promise<void> {
+  await AsyncStorage.setItem(ROUTINES_KEY, JSON.stringify(routines));
+}
