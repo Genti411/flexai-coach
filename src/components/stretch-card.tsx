@@ -1,3 +1,4 @@
+import { Image } from 'expo-image';
 import { useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
@@ -9,6 +10,7 @@ import { ThemedView } from '@/components/themed-view';
 import { Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { addToRoutine } from '@/lib/routines';
+import { imageForStretch } from '@/lib/stretch-images';
 import { Recommendation } from '@/core/types';
 
 export function StretchCard({ rec, onEasier, onHarder }: { rec: Recommendation; onEasier?: () => void; onHarder?: () => void }) {
@@ -16,6 +18,7 @@ export function StretchCard({ rec, onEasier, onHarder }: { rec: Recommendation; 
   const interactive = !!onEasier && !!onHarder;
   const hasAnimation = getTrack(rec.animationId) !== null;
   const [showAnimation, setShowAnimation] = useState(false);
+  const image = imageForStretch(rec.name);
   const [showSave, setShowSave] = useState(false);
   const [savedTo, setSavedTo] = useState<string | null>(null);
 
@@ -42,6 +45,9 @@ export function StretchCard({ rec, onEasier, onHarder }: { rec: Recommendation; 
         <ThemedText key={i} type="small" themeColor="warning">⚠ {note}</ThemedText>
       ))}
 
+      {image && !showAnimation && (
+        <Image source={image} style={styles.image} contentFit="contain" />
+      )}
       {showAnimation && hasAnimation && (
         <View style={styles.animation}><StretchAnimation animationId={rec.animationId} /></View>
       )}
@@ -78,6 +84,7 @@ const styles = StyleSheet.create({
   step: { marginTop: Spacing.half },
   meta: { marginTop: Spacing.one },
   animation: { alignItems: 'center', marginTop: Spacing.two },
+  image: { width: '100%', height: 180, marginTop: Spacing.two, borderRadius: 12 },
   actions: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.two, marginTop: Spacing.two },
   btn: { paddingHorizontal: Spacing.three, paddingVertical: Spacing.two, borderRadius: 999 },
 });
