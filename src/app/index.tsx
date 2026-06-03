@@ -110,6 +110,9 @@ export default function Home() {
             <Link href="/history" asChild>
               <Pressable><ThemedText type="link">History</ThemedText></Pressable>
             </Link>
+            <Link href="/support" asChild>
+              <Pressable><ThemedText type="link">Gear</ThemedText></Pressable>
+            </Link>
             <Link href="/legal" asChild>
               <Pressable><ThemedText type="link">Legal</ThemedText></Pressable>
             </Link>
@@ -166,8 +169,8 @@ export default function Home() {
 }
 
 const styles = StyleSheet.create({
-  header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: Spacing.three, paddingTop: Spacing.two },
-  headerLinks: { flexDirection: 'row', gap: Spacing.three },
+  header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', paddingHorizontal: Spacing.three, paddingTop: Spacing.two },
+  headerLinks: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'flex-end', flexShrink: 1, gap: Spacing.two, columnGap: Spacing.three },
   list: { padding: Spacing.three, gap: Spacing.one },
   toggleRow: { flexDirection: 'row', paddingHorizontal: Spacing.three, paddingBottom: Spacing.one },
   toggle: { paddingHorizontal: Spacing.three, paddingVertical: Spacing.one, borderRadius: 999 },
