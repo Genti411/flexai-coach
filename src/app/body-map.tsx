@@ -18,6 +18,10 @@ const AREAS: { area: string; label: string; top: `${number}%`; left: `${number}%
   { area: 'lower back', label: 'Lower back', top: '40%', left: '74%' },
   { area: 'hamstrings', label: 'Hamstrings', top: '60%', left: '38%' },
   { area: 'calf', label: 'Calf', top: '82%', left: '62%' },
+  { area: 'upper back', label: 'Upper back', top: '23%', left: '30%' },
+  { area: 'hips', label: 'Hips', top: '46%', left: '30%' },
+  { area: 'wrists', label: 'Wrists', top: '52%', left: '80%' },
+  { area: 'ankles', label: 'Ankles', top: '92%', left: '38%' },
 ];
 
 export default function BodyMapScreen() {
