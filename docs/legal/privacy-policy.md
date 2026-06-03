@@ -26,7 +26,9 @@ The **only** information the app stores on your device is:
 - a **consent record** (that you accepted this policy and the medical disclaimer,
   plus the date) - this is not health information; and
 - optional **profile preferences** you choose to set (for example, fitness level or
-  goals) - stored locally on your device only.
+  goals) - stored locally on your device only; and
+- if you explicitly enable **Save chat history** (off by default), your query text,
+  stored locally on your device only and clearable at any time.
 
 We do **not** collect your name, email, contacts, photos, microphone, camera, or
 precise location. We do not require any account.

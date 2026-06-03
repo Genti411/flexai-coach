@@ -1,5 +1,5 @@
 import { Link } from 'expo-router';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { FlatList, KeyboardAvoidingView, Platform, Pressable, StyleSheet, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -11,6 +11,8 @@ import { Spacing } from '@/constants/theme';
 import { getStretchResponse } from '@/core/engine';
 import { Difficulty, DIFFICULTY_RANK } from '@/core/types';
 import { useTheme } from '@/hooks/use-theme';
+import { addHistory } from '@/lib/history';
+import { getProfile } from '@/lib/store';
 
 const WELCOME: ChatMessage = {
   id: 'welcome',
@@ -34,6 +36,14 @@ export default function Home() {
   // Synchronous guard: two taps in the same tick both pass a state check before it
   // updates, so serialize on a ref to avoid concurrent requests scrambling state.
   const busyRef = useRef(false);
+  const historyEnabledRef = useRef(false);
+  const historyLoadedRef = useRef(false);
+  useEffect(() => {
+    getProfile().then((p) => {
+      historyEnabledRef.current = !!p.historyEnabled;
+      historyLoadedRef.current = true;
+    });
+  }, []);
 
   const send = useCallback(
     async (raw: string, difficulty: Difficulty = 'beginner') => {
@@ -56,6 +66,17 @@ export default function Home() {
       try {
         const response = await getStretchResponse(prompt);
         setMessages((prev) => [...prev, { id: nextId(), role: 'assistant', kind: 'response', response }]);
+        const historyOn = historyLoadedRef.current
+          ? historyEnabledRef.current
+          : (await getProfile()).historyEnabled;
+        if (historyOn) {
+          void addHistory({
+            ts: new Date().toISOString(),
+            query: text,
+            bodyArea: response.body_area,
+            count: response.recommendations.length,
+          });
+        }
       } finally {
         busyRef.current = false;
         setBusy(false);
@@ -85,6 +106,9 @@ export default function Home() {
             </Link>
             <Link href="/routines" asChild>
               <Pressable><ThemedText type="link">Routines</ThemedText></Pressable>
+            </Link>
+            <Link href="/history" asChild>
+              <Pressable><ThemedText type="link">History</ThemedText></Pressable>
             </Link>
             <Link href="/legal" asChild>
               <Pressable><ThemedText type="link">Legal</ThemedText></Pressable>

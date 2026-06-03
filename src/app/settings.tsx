@@ -17,19 +17,22 @@ export default function SettingsScreen() {
   const { resetAll } = useConsent();
   const [level, setLevel] = useState<FitnessLevel | undefined>(undefined);
   const [goals, setGoals] = useState('');
+  const [historyEnabled, setHistoryEnabled] = useState(false);
   const [exported, setExported] = useState<string | null>(null);
 
   useEffect(() => {
     getProfile().then((p) => {
       setLevel(p.fitnessLevel);
       setGoals(p.goals ?? '');
+      setHistoryEnabled(!!p.historyEnabled);
     });
   }, []);
 
-  const persist = (next: { fitnessLevel?: FitnessLevel; goals?: string }) => {
-    const merged = { fitnessLevel: level, goals, ...next };
+  const persist = (next: { fitnessLevel?: FitnessLevel; goals?: string; historyEnabled?: boolean }) => {
+    const merged = { fitnessLevel: level, goals, historyEnabled, ...next };
     setLevel(merged.fitnessLevel);
     setGoals(merged.goals ?? '');
+    setHistoryEnabled(!!merged.historyEnabled);
     void setProfile(merged);
   };
 
@@ -83,7 +86,8 @@ export default function SettingsScreen() {
 
         <ThemedText type="smallBold" style={styles.h}>Your data</ThemedText>
         <ThemedText type="small" themeColor="textSecondary">
-          Chat is never stored. Only your consent record and the preferences above are saved on this device.
+          Your consent record and the preferences above are saved on this device. Chat
+          is not stored unless you enable the history option below.
         </ThemedText>
         <View style={styles.row}>
           <Pressable onPress={() => void onExport()} style={[styles.btn, { backgroundColor: theme.backgroundElement }]}>
@@ -96,6 +100,21 @@ export default function SettingsScreen() {
         {exported != null && (
           <ThemedText type="code" selectable style={styles.exported}>{exported}</ThemedText>
         )}
+
+        <ThemedText type="smallBold" style={styles.h}>History</ThemedText>
+        <Pressable
+          accessibilityRole="switch"
+          accessibilityState={{ checked: historyEnabled }}
+          onPress={() => persist({ historyEnabled: !historyEnabled })}
+          style={[styles.btn, { alignSelf: 'flex-start', backgroundColor: historyEnabled ? theme.accent : theme.backgroundElement }]}
+        >
+          <ThemedText type="small" themeColor={historyEnabled ? 'accentText' : 'text'}>
+            Save chat history (this device): {historyEnabled ? 'on' : 'off'}
+          </ThemedText>
+        </Pressable>
+        <ThemedText type="small" themeColor="textSecondary">
+          Off by default. When on, your queries are stored only on this device and can be cleared from the History screen.
+        </ThemedText>
 
         <ThemedText type="smallBold" style={styles.h}>Legal</ThemedText>
         <Pressable onPress={() => router.push('/legal')}>

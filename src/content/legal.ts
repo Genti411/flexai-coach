@@ -61,7 +61,7 @@ export const PRIVACY_POLICY: LegalDoc = {
     },
     {
       heading: 'What is stored on your device',
-      body: 'Only a consent record (that you accepted this policy and the disclaimer, plus the date) and optional profile preferences you choose to set (such as fitness level or goals). These stay on your device and are not sent to us. We do not collect your name, email, contacts, photos, microphone, camera, or precise location.',
+      body: 'Only a consent record (that you accepted this policy and the disclaimer, plus the date) and optional profile preferences you choose to set (such as fitness level or goals). These stay on your device and are not sent to us. We do not collect your name, email, contacts, photos, microphone, camera, or precise location. If you turn on Save chat history (off by default) in Settings, your query text is also stored locally on your device only - never transmitted - and can be cleared any time.',
     },
     {
       heading: 'Data that leaves your device',
