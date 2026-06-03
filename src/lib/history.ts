@@ -30,3 +30,7 @@ export async function addHistory(entry: HistoryEntry): Promise<void> {
 export async function clearHistory(): Promise<void> {
   await AsyncStorage.removeItem(HISTORY_KEY);
 }
+
+export async function replaceHistory(entries: HistoryEntry[]): Promise<void> {
+  await AsyncStorage.setItem(HISTORY_KEY, JSON.stringify(entries.slice(0, MAX)));
+}

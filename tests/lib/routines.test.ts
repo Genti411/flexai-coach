@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { addToRoutine, deleteRoutine, getRoutines, removeItem } from '@/lib/routines';
+import { addToRoutine, deleteRoutine, getRoutines, removeItem, replaceRoutines } from '@/lib/routines';
 import { Recommendation } from '@/core/types';
 
 const rec = (name: string): Recommendation => ({
@@ -30,6 +30,12 @@ describe('routines store', () => {
 
   it('ignores blank names', async () => {
     await addToRoutine('   ', rec('x'));
+    expect(await getRoutines()).toEqual([]);
+  });
+
+  it('replaceRoutines overwrites the stored list', async () => {
+    await addToRoutine('A', rec('x'));
+    await replaceRoutines([]);
     expect(await getRoutines()).toEqual([]);
   });
 
