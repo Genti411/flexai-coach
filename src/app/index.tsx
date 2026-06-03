@@ -107,6 +107,9 @@ export default function Home() {
             <Link href="/routines" asChild>
               <Pressable><ThemedText type="link">Routines</ThemedText></Pressable>
             </Link>
+            <Link href="/history" asChild>
+              <Pressable><ThemedText type="link">History</ThemedText></Pressable>
+            </Link>
             <Link href="/legal" asChild>
               <Pressable><ThemedText type="link">Legal</ThemedText></Pressable>
             </Link>
