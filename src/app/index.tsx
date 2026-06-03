@@ -30,28 +30,39 @@ export default function Home() {
   const [draft, setDraft] = useState('');
   const lastInput = useRef<{ text: string; difficulty: Difficulty }>({ text: '', difficulty: 'beginner' });
   const [busy, setBusy] = useState(false);
+  const [weights, setWeights] = useState(false);
   // Synchronous guard: two taps in the same tick both pass a state check before it
   // updates, so serialize on a ref to avoid concurrent requests scrambling state.
   const busyRef = useRef(false);
 
-  const send = useCallback(async (raw: string, difficulty: Difficulty = 'beginner') => {
-    const text = raw.trim();
-    if (!text || busyRef.current) return;
-    busyRef.current = true;
-    setBusy(true);
-    lastInput.current = { text, difficulty };
-    const userMsg: ChatMessage = { id: nextId(), role: 'user', kind: 'text', text };
-    setMessages((prev) => [...prev, userMsg]);
-    setDraft('');
-    const prompt = difficulty === 'beginner' ? text : `${difficulty} ${text}`;
-    try {
-      const response = await getStretchResponse(prompt);
-      setMessages((prev) => [...prev, { id: nextId(), role: 'assistant', kind: 'response', response }]);
-    } finally {
-      busyRef.current = false;
-      setBusy(false);
-    }
-  }, []);
+  const send = useCallback(
+    async (raw: string, difficulty: Difficulty = 'beginner') => {
+      const text = raw.trim();
+      if (!text || busyRef.current) return;
+      busyRef.current = true;
+      setBusy(true);
+      lastInput.current = { text, difficulty };
+      const userMsg: ChatMessage = { id: nextId(), role: 'user', kind: 'text', text };
+      setMessages((prev) => [...prev, userMsg]);
+      setDraft('');
+      // Light-weights mode surfaces the weighted (advanced) variants in the dataset.
+      // Safety still gates them: the engine drops weighted items at medium/high risk.
+      const diff = weights ? 'advanced' : difficulty;
+      const parts: string[] = [];
+      if (diff !== 'beginner') parts.push(diff);
+      parts.push(text);
+      if (weights && !/weight|dumbbell|kettlebell|barbell|band/i.test(text)) parts.push('with weights');
+      const prompt = parts.join(' ');
+      try {
+        const response = await getStretchResponse(prompt);
+        setMessages((prev) => [...prev, { id: nextId(), role: 'assistant', kind: 'response', response }]);
+      } finally {
+        busyRef.current = false;
+        setBusy(false);
+      }
+    },
+    [weights],
+  );
 
   const adjust = useCallback(
     (delta: number) => {
@@ -93,6 +104,18 @@ export default function Home() {
           )}
         />
         <PromptChips onSelect={(t) => void send(t)} />
+        <View style={styles.toggleRow}>
+          <Pressable
+            onPress={() => setWeights((v) => !v)}
+            accessibilityRole="switch"
+            accessibilityState={{ checked: weights }}
+            style={[styles.toggle, { backgroundColor: weights ? theme.accent : theme.backgroundElement }]}
+          >
+            <ThemedText type="small" themeColor={weights ? 'accentText' : 'text'}>
+              Light weights: {weights ? 'on' : 'off'}
+            </ThemedText>
+          </Pressable>
+        </View>
         <SafeAreaView edges={['bottom']} style={{ backgroundColor: theme.background }}>
           <View style={styles.inputRow}>
             <TextInput
@@ -122,6 +145,8 @@ const styles = StyleSheet.create({
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: Spacing.three, paddingTop: Spacing.two },
   headerLinks: { flexDirection: 'row', gap: Spacing.three },
   list: { padding: Spacing.three, gap: Spacing.one },
+  toggleRow: { flexDirection: 'row', paddingHorizontal: Spacing.three, paddingBottom: Spacing.one },
+  toggle: { paddingHorizontal: Spacing.three, paddingVertical: Spacing.one, borderRadius: 999 },
   inputRow: { flexDirection: 'row', gap: Spacing.two, paddingHorizontal: Spacing.three, paddingBottom: Spacing.two },
   input: { flex: 1, borderRadius: 999, paddingHorizontal: Spacing.three, paddingVertical: Spacing.two },
   sendBtn: { borderRadius: 999, paddingHorizontal: Spacing.four, justifyContent: 'center' },
