@@ -1,9 +1,9 @@
 import { buildResponse, STRETCH_DATASET } from '@/core/dataset';
 
 describe('dataset', () => {
-  it('has entries for all seven areas', () => {
+  it('has entries for all eleven areas', () => {
     expect(Object.keys(STRETCH_DATASET).sort()).toEqual(
-      ['calf', 'chest', 'hamstrings', 'lower back', 'neck', 'post-workout', 'shoulders'].sort(),
+      ['ankles', 'calf', 'chest', 'hamstrings', 'hips', 'lower back', 'neck', 'post-workout', 'shoulders', 'upper back', 'wrists'].sort(),
     );
   });
 

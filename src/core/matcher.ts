@@ -13,6 +13,10 @@ const BODY_AREA_KEYWORDS: [string, string[]][] = [
   ['shoulders', ['shoulder', 'shoulders', 'delts', 'rotator cuff']],
   ['hamstrings', ['hamstring', 'hamstrings', 'back of my leg', 'back of the thigh']],
   ['chest', ['chest', 'pecs', 'pectoral']],
+  ['hips', ['hip', 'hips', 'glute', 'glutes', 'piriformis']],
+  ['wrists', ['wrist', 'wrists', 'forearm', 'forearms']],
+  ['upper back', ['upper back', 'mid back', 'mid-back', 'between my shoulder blades', 'thoracic', 'rhomboid']],
+  ['ankles', ['ankle', 'ankles']],
   ['post-workout', ['post workout', 'post-workout', 'after working out', 'after my workout', 'leg day', 'after lifting', 'after a workout']],
 ];
 
