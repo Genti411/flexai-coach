@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { deleteData, exportData, getConsent, getProfile, setConsentAccepted, setProfile } from '@/lib/store';
 import { addToRoutine } from '@/lib/routines';
+import { addHistory } from '@/lib/history';
 
 beforeEach(async () => {
   await AsyncStorage.clear();
@@ -54,5 +55,17 @@ describe('store', () => {
     expect(data.routines).toHaveLength(1);
     await deleteData();
     expect((await exportData()).routines).toEqual([]);
+  });
+
+  it('export includes history and delete clears it', async () => {
+    await addHistory({ ts: new Date().toISOString(), query: 'q', bodyArea: 'neck', count: 1 });
+    expect((await exportData()).history).toHaveLength(1);
+    await deleteData();
+    expect((await exportData()).history).toEqual([]);
+  });
+
+  it('stores the historyEnabled profile flag', async () => {
+    await setProfile({ historyEnabled: true });
+    expect((await getProfile()).historyEnabled).toBe(true);
   });
 });

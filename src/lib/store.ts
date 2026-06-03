@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import { getHistory, HISTORY_KEY, type HistoryEntry } from '@/lib/history';
 import { getRoutines, ROUTINES_KEY, type Routine } from '@/lib/routines';
 
 export type FitnessLevel = 'beginner' | 'intermediate' | 'advanced';
@@ -7,6 +8,7 @@ export type FitnessLevel = 'beginner' | 'intermediate' | 'advanced';
 export interface ProfilePrefs {
   fitnessLevel?: FitnessLevel;
   goals?: string;
+  historyEnabled?: boolean;
 }
 
 export interface ConsentRecord {
@@ -18,6 +20,7 @@ export interface LocalData {
   consent: ConsentRecord;
   profile: ProfilePrefs;
   routines: Routine[];
+  history: HistoryEntry[];
 }
 
 const CONSENT_KEY = 'flexai:consent';
@@ -56,10 +59,15 @@ export async function setProfile(p: ProfilePrefs): Promise<void> {
 }
 
 export async function exportData(): Promise<LocalData> {
-  const [consent, profile, routines] = await Promise.all([getConsent(), getProfile(), getRoutines()]);
-  return { consent, profile, routines };
+  const [consent, profile, routines, history] = await Promise.all([
+    getConsent(),
+    getProfile(),
+    getRoutines(),
+    getHistory(),
+  ]);
+  return { consent, profile, routines, history };
 }
 
 export async function deleteData(): Promise<void> {
-  await AsyncStorage.multiRemove([CONSENT_KEY, PROFILE_KEY, ROUTINES_KEY]);
+  await AsyncStorage.multiRemove([CONSENT_KEY, PROFILE_KEY, ROUTINES_KEY, HISTORY_KEY]);
 }
