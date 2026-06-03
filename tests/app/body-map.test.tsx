@@ -3,9 +3,9 @@ import { fireEvent, render, screen } from '@testing-library/react-native';
 import BodyMapScreen from '@/app/body-map';
 
 describe('BodyMapScreen', () => {
-  it('renders all six area labels', () => {
+  it('renders all ten area labels', () => {
     render(<BodyMapScreen />);
-    for (const label of ['Neck', 'Shoulders', 'Chest', 'Lower back', 'Hamstrings', 'Calf']) {
+    for (const label of ['Neck', 'Shoulders', 'Chest', 'Lower back', 'Hamstrings', 'Calf', 'Upper back', 'Hips', 'Wrists', 'Ankles']) {
       expect(screen.getByText(label)).toBeTruthy();
     }
   });
