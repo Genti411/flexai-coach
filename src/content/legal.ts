@@ -65,7 +65,7 @@ export const PRIVACY_POLICY: LegalDoc = {
     },
     {
       heading: 'Data that leaves your device',
-      body: 'The app works fully offline using an on-device stretch library. Only when the on-device matcher cannot understand your request may the app send that single message’s text to Google’s Gemini API to generate a suggestion. No identifiers, profile data, or history are sent. If no AI key is configured, this never happens. We do not use ad networks and do not sell or share your information.',
+      body: 'The app works fully offline using an on-device stretch library. Only when the on-device matcher cannot understand your request may the app send that single message’s text to Google’s Gemini API to generate a suggestion. No identifiers, profile data, or history are sent. If no AI key is configured, this never happens. We do not use ad networks and do not sell or share your information. If you create an optional account and tap Back up, your routines, history, and preferences are stored in your own private row in the app’s Supabase database (protected so only you can read it) until you delete them. Accounts are entirely optional; without one, nothing syncs.',
     },
     {
       heading: 'Your controls',

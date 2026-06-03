@@ -45,7 +45,10 @@ API to generate a suggestion. In that case:
 - this fallback is the only outbound transmission of your input, and it does not
   occur for inputs the app recognizes locally;
 - if no AI key is configured in the build, this fallback is disabled entirely and
-  no chat content ever leaves your device.
+  no chat content ever leaves your device;
+- if you create an **optional account** and tap **Back up**, your routines, history,
+  and preferences are stored in your own row-level-secured record in the app's
+  Supabase project until you delete them. No account = no sync.
 
 We do not use advertising networks, and we do **not** sell or share your personal or
 health information with advertisers or data brokers.

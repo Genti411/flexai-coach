@@ -37,6 +37,11 @@ EXPO_PUBLIC_GEMINI_API_KEY=your_free_restricted_key
 
 Leave it empty to run entirely offline.
 
+Optional accounts/cloud sync: create a Supabase project, run
+`supabase/migrations/0001_user_data.sql`, and set EXPO_PUBLIC_SUPABASE_URL and
+EXPO_PUBLIC_SUPABASE_ANON_KEY in .env. Without these, the app stays local-only and
+the Account screen shows "not configured".
+
 ## Test & verify
 
 ```bash
