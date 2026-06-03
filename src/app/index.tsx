@@ -119,6 +119,9 @@ export default function Home() {
             <Link href="/settings" asChild>
               <Pressable><ThemedText type="link">Settings</ThemedText></Pressable>
             </Link>
+            <Link href="/account" asChild>
+              <Pressable><ThemedText type="link">Account</ThemedText></Pressable>
+            </Link>
           </View>
         </View>
         <DisclaimerBanner />
