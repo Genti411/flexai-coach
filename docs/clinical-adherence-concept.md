@@ -159,12 +159,29 @@ operate on real PHI: signed BAAs, a HIPAA risk assessment, SOC 2 certification,
 clinical/legal sign-off, and provider/payer contracts. Plan to build **HIPAA-ready**,
 then complete those with counsel/assessors before go-live.
 
-## 13. Open questions to resolve before building
+## 13. Resolved decisions (recommended)
 
-1. Patient app = extend FlexAI's app, or a separate patient app sharing the engine?
-2. Clinician portal = Next.js web (recommended) - confirm.
-3. Backend = Supabase + BAA for MVP, or a dedicated HIPAA stack from day one?
-4. First customer/design partner clinic to shape the MVP? (Strongly recommended -
-   build with one real clinic.)
-5. Which activities to verify first via wearables (steps and weight are easiest)?
+1. **Patient app = separate app sharing a common engine.** Extract FlexAI's
+   `dataset` / `engine` / animations / safety classifier into a shared package and
+   build a **new patient app** for the clinical product. Rationale: keep a PHI
+   clinical product isolated from the consumer app's no-account, privacy-by-design
+   ethos - cleaner security boundary, separate release/audit scope. (The consumer
+   FlexAI Coach app stays exactly as-is.)
+2. **Clinician/admin portal = Next.js web** (confirmed). Matches the existing
+   `beauty-ai-web` stack; clinicians need a desktop dashboard.
+3. **Backend = Supabase + signed BAA on a paid tier for the MVP.** Postgres + Auth +
+   RLS + Storage; fastest path on a known stack, HIPAA-eligible with the BAA.
+   Re-evaluate a dedicated HIPAA cloud (AWS/GCP) only if enterprise scale/compliance
+   demands it later. No real PHI until the BAA is signed.
+4. **First wearables = steps + body weight** via Apple HealthKit and Android Health
+   Connect. Easiest, highest-signal, broadest device support. Defer swimming, GPS
+   routes, and heart-rate to a later phase.
+5. **Repo layout = monorepo** with `packages/exercise-core` (shared library),
+   `apps/patient` (Expo), `apps/clinician` (Next.js), and `supabase/` (schema +
+   migrations). One source of truth for exercises; isolated deploy targets.
+
+### Still your action (not a code decision)
+- **Line up a design-partner clinic.** A real PT/wellness clinic to co-design the
+  MVP and pilot it. Not a blocker to start building, but strongly recommended before
+  go-live - it shapes the care-plan builder and gives you a first reference customer.
 ```
